@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpn.workbench.mapper.Customer_remarkMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.bjpn.workbench.bean.Customer_remark">
+        <id column="id" property="id" />
+        <result column="noteContent" property="noteContent" />
+        <result column="createBy" property="createBy" />
+        <result column="createTime" property="createTime" />
+        <result column="editBy" property="editBy" />
+        <result column="editTime" property="editTime" />
+        <result column="editFlag" property="editFlag" />
+        <result column="customerId" property="customerId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, noteContent, createBy, createTime, editBy, editTime, editFlag, customerId
+    </sql>
+
+</mapper>

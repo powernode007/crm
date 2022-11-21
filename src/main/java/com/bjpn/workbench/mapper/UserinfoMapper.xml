@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpn.workbench.mapper.UserinfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.bjpn.workbench.bean.Userinfo">
+        <id column="userid" property="userid" />
+        <result column="username" property="username" />
+        <result column="usercode" property="usercode" />
+        <result column="userpwd" property="userpwd" />
+        <result column="userphoto" property="userphoto" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        userid, username, usercode, userpwd, userphoto
+    </sql>
+
+</mapper>

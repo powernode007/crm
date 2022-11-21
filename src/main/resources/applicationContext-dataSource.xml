@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+  http://www.springframework.org/schema/context
+  https://www.springframework.org/schema/context/spring-context.xsd
+  http://www.springframework.org/schema/tx
+  http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!--spring整合mybatis和mybatis-plus-->
+    <!--1、引入外部的配置文件-->
+    <context:property-placeholder location="classpath:dbutil.properties"/>
+    <!--2、配置数据源对象    使用jdbc的datasource  mybatis-plus没有单独的数据源对象
+        依然使用Spring的datasource对象
+        druid  数据库连接池
+    -->
+    <bean id="myDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <!--druid连接池  可以自动识别你导入的mysql包中的驱动类-->
+        <!-- <property name="driverClassName" value="${driverName}"/>-->
+        <property name="url"  value="${urlName}"/>
+        <property name="username" value="root"/>
+        <property name="password" value="873639952"/>
+        <property name="maxActive" value="20"/><!--最大连接数-->
+        <property name="maxWait" value="600"/><!--最长等待时间-->
+
+    </bean>
+    <!--3、管理sqlSessionFactory-->
+    <bean id="mySqlSessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
+        <property name="dataSource" ref="myDataSource"/>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <!--使用下面的方式配置参数，一行配置一个  参数优化配置  不写也可以-->
+                        <value>
+                            offsetAsPageNum=true<!--如果没有传递pageNum  默认=1-->
+                            rowBoundsWithCount=true<!--自动进行记录数查询  可以不写-->
+                            pageSizeZero=true<!--如果没有传递pageSize 不再提供分页-->
+                            reasonable=true<!--pageNum如果超过总页数 强行归为最后一页-->
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+        <!--如果有mybatis配置文件就写  没有就不写-->
+        <!--<property name="configLocation" value="classpath:mybatis.xml"/>-->
+    </bean>
+    <!--4、mapperScanner-->
+    <bean id="myMapperScan" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.bjpn.settings.mapper;com.bjpn.workbench.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="mySqlSessionFactory"/>
+    </bean>
+    <!--5、spring的aop  完成事务管理-->
+    <bean id="myTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="myDataSource"/>
+    </bean>
+    <!--6,使用注解方案的事务传播行为-->
+    <tx:annotation-driven transaction-manager="myTransactionManager"/>
+</beans>

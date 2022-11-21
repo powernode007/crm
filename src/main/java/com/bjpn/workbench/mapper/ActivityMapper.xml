@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpn.workbench.mapper.ActivityMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.bjpn.workbench.bean.Activity">
+        <id column="activity_id" property="activityId" />
+        <result column="activity_owner" property="activityOwner" />
+        <result column="activity_name" property="activityName" />
+        <result column="activity_start_date" property="activityStartDate" />
+        <result column="activity_end_date" property="activityEndDate" />
+        <result column="activity_cost" property="activityCost" />
+        <result column="activity_description" property="activityDescription" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="edit_time" property="editTime" />
+        <result column="edit_by" property="editBy" />
+
+    </resultMap>
+
+    <!-- 通用查询
+    结果列 -->
+    <sql id="Base_Column_List">
+        activity_id, activity_owner, activity_name, activity_start_date, activity_end_date, activity_cost, activity_description, create_time, create_by, edit_time, edit_by
+    </sql>
+
+    <!--boolean importActivityByList(List<Activity> activityList);-->
+<insert id="importActivityByList" parameterType="list">
+    insert into tbl_activity (activity_owner, activity_name, activity_start_date, activity_end_date, activity_cost, activity_description, create_time, create_by, edit_time, edit_by)
+    values
+    <foreach collection="list" item="activity" separator=",">
+        (#{activity.activityOwner},#{activity.activityName},#{activity.activityStartDate},#{activity.activityEndDate},#{activity.activityCost},#{activity.activityDescription},#{activity.createTime},#{activity.createBy},#{activity.editTime},#{activity.editBy})
+    </foreach>
+</insert>
+    <!--boolean updatesById(Activity activity);-->
+<update id="updatesById" parameterType="com.bjpn.workbench.bean.Activity">
+    update  tbl_activity
+    <set >
+        <if test="activityOwner != null" >
+            activity_owner = #{activityOwner,jdbcType=VARCHAR},
+        </if>
+        <if test="activityName != null" >
+            activity_name = #{activityName,jdbcType=VARCHAR},
+        </if>
+        <if test="activityStartDate != null" >
+            activity_start_date = #{activityStartDate,jdbcType=VARCHAR},
+        </if>
+        <if test="activityEndDate != null" >
+            activity_end_date = #{activityEndDate,jdbcType=VARCHAR},
+        </if>
+        <if test="activityCost != null" >
+            activity_cost = #{activityCost,jdbcType=VARCHAR},
+        </if>
+        <if test="activityDescription != null" >
+            activity_description = #{activityDescription,jdbcType=VARCHAR},
+        </if>
+    </set>
+    where activity_id = #{activityId,jdbcType=INTEGER}
+
+</update>
+</mapper>

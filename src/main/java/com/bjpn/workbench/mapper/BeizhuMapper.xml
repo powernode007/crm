@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpn.workbench.mapper.BeizhuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.bjpn.workbench.bean.Beizhu">
+        <id column="beizhu_id" property="beizhuId" />
+        <result column="beizhu_name" property="beizhuName" />
+        <result column="beizhu_time" property="beizhuTime" />
+        <result column="beizhu_owner" property="beizhuOwner" />
+        <result column="beizhu_pinglun" property="beizhuPinglun" />
+        <result column="beizhu_editFlag" property="beizhuEditflag" />
+        <result column="beizhu_editTime" property="beizhuEdittime" />
+        <result column="beizhu_editBy" property="beizhuEditby" />
+        <result column="beizhu_activityId" property="beizhuActivityid" />
+        <result column="beizhu_noteContent" property="beizhuNotecontent" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        beizhu_id, beizhu_name, beizhu_time, beizhu_owner, beizhu_pinglun, beizhu_editFlag, beizhu_editTime, beizhu_editBy, beizhu_activityId, beizhu_noteContent
+    </sql>
+
+</mapper>
